@@ -1,0 +1,30 @@
+.tutorial-container {
+    position: relative;
+}
+
+.message {
+    max-width: 200px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    position: absolute;
+    top: 100%;
+}
+
+.message-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+button {
+    border: none;
+    background-color: white;
+    padding: 4px 8px;
+    color: #1e88e5;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #e3f2fd;
+}

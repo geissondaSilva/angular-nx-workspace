@@ -1,0 +1,9 @@
+<div class="tutorial-container">
+    <ng-content></ng-content>
+    <div *ngIf="viewMessage" class="message">
+        <ng-content select="ui-tutorial-message"></ng-content>
+        <div class="message-actions">
+            <button>Entendi</button>
+        </div>
+    </div>
+</div>
