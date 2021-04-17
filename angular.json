@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "sales",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "sales": {
+      "projectType": "application",
+      "root": "apps/sales",
+      "sourceRoot": "apps/sales/src",
+      "prefix": "workspace",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/sales",
+            "index": "apps/sales/src/index.html",
+            "main": "apps/sales/src/main.ts",
+            "polyfills": "apps/sales/src/polyfills.ts",
+            "tsConfig": "apps/sales/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/sales/src/favicon.ico", "apps/sales/src/assets"],
+            "styles": ["apps/sales/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/sales/src/environments/environment.ts",
+                  "with": "apps/sales/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "sales:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sales:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sales:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/sales/src/**/*.ts",
+              "apps/sales/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/sales"],
+          "options": {
+            "jestConfig": "apps/sales/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "sales-e2e": {
+      "root": "apps/sales-e2e",
+      "sourceRoot": "apps/sales-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/sales-e2e/cypress.json",
+            "tsConfig": "apps/sales-e2e/tsconfig.e2e.json",
+            "devServerTarget": "sales:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "sales:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/sales-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
